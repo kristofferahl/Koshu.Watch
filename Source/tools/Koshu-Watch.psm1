@@ -34,8 +34,28 @@ function Start-Watch {
 		if($result.TimedOut) {
 			continue;
 		}
-		write-host $result.ChangeType.tostring() "'$($result.Name)'" -fore yellow
-		invoke-command -scriptblock $action -argumentlist $result
+		write-host $result.changetype.tostring() "'$($result.name)'" -fore yellow
+
+		$context = ([ordered]@{
+			"type" = $result.changetype.tostring().tolower()
+			"path" = "$path\$($result.name)"
+		})
+
+		$fileName = [io.path]::GetFileName($context.path)
+		if ($fileName -ne $null -and $fileName -ne '') {
+			$context.name = $fileName
+		}
+
+		$fileExtension = [io.path]::GetExtension($context.path)
+		if ($fileExtension -ne $null -and $fileExtension -ne '') {
+			$context.extension = $fileExtension
+		}
+
+		if ($result.oldname -ne $null -and $result.oldname -ne '') {
+			$context.oldPath="$path\$($result.oldname)"
+		}
+
+		invoke-command -scriptblock $action -argumentlist $context
 	}
 }
 
