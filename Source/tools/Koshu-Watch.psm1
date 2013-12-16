@@ -11,7 +11,7 @@ function Start-Watch {
 	param(
 		[Parameter(Position=0,Mandatory=0,ValueFromPipeline=$True)][string]$path='.\',
 		[Parameter(Position=1,Mandatory=1,ValueFromPipeline=$True)][scriptblock]$action,
-		[Parameter(Position=2,Mandatory=0,ValueFromPipeline=$True)][switch]$subdirectories,
+		[Parameter(Position=2,Mandatory=0,ValueFromPipeline=$True)][switch]$recurse,
 		[Parameter(Position=3,Mandatory=0,ValueFromPipeline=$True)][int]$timeout=1000
 	)
 
@@ -23,7 +23,7 @@ function Start-Watch {
 
 	$watcher = new-object System.IO.FileSystemWatcher
 	$watcher.Path = $path
-	$watcher.IncludeSubdirectories = $subdirectories
+	$watcher.IncludeSubdirectories = $recurse
 	$watcher.EnableRaisingEvents = $false
 	$watcher.NotifyFilter = [System.IO.NotifyFilters]::LastWrite -bor [System.IO.NotifyFilters]::FileName
 
