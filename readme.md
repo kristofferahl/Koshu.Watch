@@ -15,15 +15,15 @@ This plugin currently does not support configuration.
 ### Watching
 
 	Start-Watch -path 'C:\Path\To\Application' -action {
-		param($result)
-		write-host "A change to $($result.Name) triggered this action."
+		param($context)
+		write-host "A change to $($context.path) triggered this action."
 	}
 
 ### Watching subdirectories
 
-	Start-Watch -path 'C:\Path\To\Application' -subdirectories -action {
-		param($result)
-		write-host "A change to $($result.Name) triggered this action."
+	Start-Watch -path 'C:\Path\To\Application' -recurse -action {
+		param($context)
+		write-host "A change to $($context.path) triggered this action."
 	}
 
 ## License
