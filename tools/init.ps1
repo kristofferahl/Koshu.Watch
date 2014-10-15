@@ -7,5 +7,5 @@ Param(
 # Put your initialization code here
 # -----------------------------------------------------
 
-$module = (join-path (resolve-path $parameters.packageDir) 'source\tools\Koshu-Watch.psm1')
+$module = (join-path (resolve-path $parameters.packageDir) 'tools\Koshu-Watch.psm1')
 import-module $module -disablenamechecking -global -args $config
